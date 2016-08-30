@@ -14,4 +14,4 @@ test:
     - ./gradlew assembleDebug assembleAndroidTest
     - echo "y" | sudo /opt/google-cloud-sdk/bin/gcloud beta test android run args.yaml:instrumentation-test
   post:
-    - sudo /opt/google-cloud-sdk/bin/gsutil -m cp -r -U `sudo /opt/google-cloud-sdk/bin/gsutil ls gs://cloud-test-${PROJECT_ID} | tail -1` $CIRCLE_ARTIFACTS/ | true
+    - sudo /opt/google-cloud-sdk/bin/gsutil -m cp -r -U `sudo /opt/google-cloud-sdk/bin/gsutil ls gs://${BUCKET_NAME} | tail -1` $CIRCLE_ARTIFACTS/ | true
