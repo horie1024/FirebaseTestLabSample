@@ -1,4 +1,6 @@
 dependencies:
+  pre:
+    - sudo pip install -U crcmod
   override:
     - echo y | android update sdk --no-ui --all --filter "android-24,build-tools-24.0.2"
     - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
@@ -11,3 +13,5 @@ test:
   override:
     - ./gradlew assembleDebug assembleAndroidTest
     - echo "y" | sudo /opt/google-cloud-sdk/bin/gcloud beta test android run args.yaml:instrumentation-test
+  post:
+    - sudo /opt/google-cloud-sdk/bin/gsutil -m cp -r -U `sudo /opt/google-cloud-sdk/bin/gsutil ls gs://cloud-test-${PROJECT_ID} | tail -1` $CIRCLE_ARTIFACTS/ | true
